@@ -3,14 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Atecomia?</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            color: white;
+            border: none;
+        }
+
+        #yes {
+            background-color: green;
+        }
+
+        #no {
+            background-color: red;
+            position: relative; /* Preparando para movimentação */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <p class="question">Vamos para o Atecomia?</p>
-        <button id="yes" style="background-color: green;">Sim</button>
-        <button id="no" style="background-color: red;">Não</button>
+        <button id="yes">Sim</button>
+        <button id="no">Não</button>
     </div>
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('yes').addEventListener('click', function() {
+            window.location.href = 'https://www.instagram.com/atecoufsc/';
+        });
+
+        function moveButton(e) {
+            const button = e.target;
+            const container = document.querySelector('.container');
+            const maxX = container.clientWidth - button.clientWidth;
+            const maxY = container.clientHeight - button.clientHeight;
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+
+            button.style.position = 'absolute';
+            button.style.left = `${Math.min(newX, container.offsetWidth - button.offsetWidth)}px`;
+            button.style.top = `${Math.min(newY, container.offsetHeight - button.offsetHeight)}px`;
+        }
+
+        document.getElementById('no').addEventListener('mouseover', moveButton);
+        document.getElementById('no').addEventListener('touchstart', moveButton, {passive: true});
+    </script>
 </body>
 </html>
